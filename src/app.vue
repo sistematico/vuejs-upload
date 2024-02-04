@@ -44,17 +44,17 @@ function uploadFiles() {
   }
 }
 
-async function uploadChunk(file: Queue) {
+async function uploadChunk(queue: Queue) {
   const formData = new FormData()
-  // const headers = new Headers()
-
+  const file = queue.file
+  const name = queue.name
   const chunkSize = 1024 * 1024 // size of each chunk (1MB)
   let start = 0
 
-  while (start < file.file.size) {
-    const chunk = file.file.slice(start, start + chunkSize)
+  while (start < file.size) {
+    const chunk = file.slice(start, start + chunkSize)
     formData.append('files', chunk)
-    status.value = await (await fetch(url, { method: 'POST', body: formData })).text()
+    status.value = await (await fetch(url + '/' + name, { method: 'POST', body: formData })).text()
     start += chunkSize
   }
 }
