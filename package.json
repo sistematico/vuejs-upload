@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bun x --bun vite && bun run --watch src/server.ts",
-    "site:dev": "bun x --bun vite",
+    "site:dev": "bun x vite",
     "api:dev": "bun run --watch src/server.ts",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"

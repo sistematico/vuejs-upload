@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "bun: site:dev",
+			"detail": "bun x vite - package.json",
+			"type": "bun",
+			"script": "site:dev",
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		},
+		{
+			"label": "bun: api:dev",
+			"detail": "bun run --watch src/server.ts - package.json",
+			"type": "bun",
+			"script": "api:dev",
+			"problemMatcher": [],
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
+		}
+	]
+}
