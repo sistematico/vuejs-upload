@@ -60,7 +60,10 @@ async function uploadChunk(queue: Queue) {
 
     console.log(`Current Chunk ${chunk}, Slice: ${start}`)
   }
-}               
+}
+
+
+                    
 
 
 

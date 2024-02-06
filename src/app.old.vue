@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 interface Queue {
-  file: File;
+  file: Blob;
   size: number;
   name: string;
 }
@@ -10,6 +10,21 @@ interface Queue {
 const url = 'http://localhost:3000/upload'
 const queue = ref<Queue[]>([])
 const status = ref('')
+
+// function handleFileUpload(event: Event) {
+//   const files = (event.target as HTMLInputElement).files
+//   if (!files) return
+
+//   const chunkSize = 1024 * 1024 // size of each chunk (1MB)
+//   let start = 0
+
+//   for (const file of files) {
+//     while (start < file.size) {
+//       uploadChunk(file.slice(start, start + chunkSize))
+//       start += chunkSize
+//     }
+//   }
+// }
 
 function addQueue(event: Event) {
   const files = (event.target as HTMLInputElement).files
@@ -36,45 +51,15 @@ async function uploadChunk(queue: Queue) {
   const file = queue.file
   const name = queue.name
   const chunkSize = 1024 * 1024 // size of each chunk (1MB)
-  // const totalChunks = queue.file.byteLength / CHUNK_SIZE;
-  const totalChunks = queue.size / chunkSize;
   let start = 0
 
-  console.log("Total Chunks", totalChunks)
- 
-
-  //while (start < file.size) {
-  for (let chunk = 0; chunk < totalChunks + 1; chunk++) {
-    // let CHUNK = content.slice(chunk * CHUNK_SIZE, (chunk + 1) * CHUNK_SIZE)
-    const CHUNK = file.slice(start, start + chunkSize)
-    formData.append('files', CHUNK)
-
-    // console.log(start)
-    
-    status.value = await (await fetch(url + '/' + name, { 
-      method: 'POST', 
-      body: formData 
-    })).text()
-
+  while (start < file.size) {
+    const chunk = file.slice(start, start + chunkSize)
+    formData.append('files', chunk)
+    status.value = await (await fetch(url + '/' + name, { method: 'POST', body: formData })).text()
     start += chunkSize
-
-    console.log(`Current Chunk ${chunk}, Slice: ${start}`)
   }
-}               
-
-
-
-// for (let chunk = 0; chunk < totalChunks + 1; chunk++) {
-//     let CHUNK = content.slice(chunk * CHUNK_SIZE, (chunk + 1) * CHUNK_SIZE)
-
-//     await fetch('/upload?fileName=' + fileName, {
-//         'method' : 'POST',
-//         'headers' : {
-//             'content-type' : "application/octet-stream",
-//             'content-length' : CHUNK.length
-//         },
-//         'body' : CHUNK
-//     })
+}
 </script>
 <template>
   <section class="section">

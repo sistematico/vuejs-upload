@@ -7,9 +7,6 @@
 			"type": "bun",
 			"script": "site:dev",
 			"problemMatcher": [],
-			"runOptions": {
-				"runOn": "folderOpen"
-			}
 		},
 		{
 			"label": "bun: api:dev",
@@ -17,9 +14,6 @@
 			"type": "bun",
 			"script": "api:dev",
 			"problemMatcher": [],
-			"runOptions": {
-				"runOn": "folderOpen"
-			}
 		}
 	]
 }
